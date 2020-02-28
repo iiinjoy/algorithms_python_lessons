@@ -41,7 +41,7 @@ class DynArray:
             new_capacity = 2*self.capacity
             new_array = self.make_array(new_capacity)
             for j in range(self.count, 0, -1):
-                if j < i:
+                if j <= i:
                     new_array[j-1] = self.array[j-1]
                 else:
                     new_array[j] = self.array[j-1]

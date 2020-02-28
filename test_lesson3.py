@@ -24,25 +24,40 @@ class TestDynArrayMethods(unittest.TestCase):
         DA.insert(3, 4)
         self.assertEqual(DA[3], 4)
         self.assertEqual(DA[4], 5)
+        DA.insert(5, 6)
+        for i in range(DA.count):
+            self.assertEqual(DA[i], i+1)
 
-        for i in range(6, 17):
+        for i in range(7, 17):
             DA.append(i)
         self.assertEqual(DA.count, 16)
         self.assertEqual(DA.capacity, 16)
 
-        DA.insert(0, 0)
+        DA.insert(16, 17)
         self.assertEqual(DA.count, 17)
         self.assertEqual(DA.capacity, 32)
         for i in range(DA.count):
+            self.assertEqual(DA[i], i+1)
+
+        DA.insert(0, 0)
+        self.assertEqual(DA.count, 18)
+        for i in range(DA.count):
             self.assertEqual(DA[i], i)
 
-        DA.insert(17, 17)
-        self.assertEqual(DA.count, 18)
+        DA.insert(7, 99)
+        self.assertEqual(DA.count, 19)
+        for i in range(DA.count):
+            if(i < 7):
+                self.assertEqual(DA[i], i)
+            elif i == 7:
+                self.assertEqual(DA[i], 99)
+            else:
+                self.assertEqual(DA[i], i-1)
 
         with self.assertRaises(IndexError):
             DA.insert(-1, -1)
         with self.assertRaises(IndexError):
-            DA.insert(19, 19)
+            DA.insert(42, 19)
 
     def test_delete(self):
         DA = DynArray()
@@ -65,30 +80,45 @@ class TestDynArrayMethods(unittest.TestCase):
         DA.insert(0, 0)
         self.assertEqual(DA.count, 16)
         self.assertEqual(DA.capacity, 16)
+        for i in range(DA.count):
+            self.assertEqual(DA[i], i)
+
         DA.append(16)
         self.assertEqual(DA.count, 17)
         self.assertEqual(DA.capacity, 32)
+        for i in range(DA.count):
+            self.assertEqual(DA[i], i)
+
         DA.delete(16)
         self.assertEqual(DA.count, 16)
         self.assertEqual(DA.capacity, 32)
+        for i in range(DA.count):
+            self.assertEqual(DA[i], i)
 
         DA.delete(0)
         self.assertEqual(DA.count, 15)
         self.assertEqual(DA.capacity, 21)
+        for i in range(DA.count):
+            self.assertEqual(DA[i], i+1)
 
         for _ in range(4):
             DA.delete(0)
         self.assertEqual(DA.count, 11)
         self.assertEqual(DA.capacity, 21)
+        for i in range(DA.count):
+            self.assertEqual(DA[i], i+5)
 
-        DA.delete(0)
+        DA.delete(10)
         self.assertEqual(DA.count, 10)
         self.assertEqual(DA.capacity, 16)
+        for i in range(DA.count):
+            self.assertEqual(DA[i], i+5)
 
         for _ in range(DA.count):
             DA.delete(0)
         self.assertEqual(DA.count, 0)
         self.assertEqual(DA.capacity, 16)
+
 
 if __name__ == '__main__':
     unittest.main()
