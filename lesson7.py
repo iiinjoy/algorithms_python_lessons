@@ -70,6 +70,7 @@ class OrderedList:
                     node.next.prev = node.prev
                 else:
                     self.tail = node.prev
+                return
             if comp == asc:
                 return
             node = node.next
