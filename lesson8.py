@@ -33,9 +33,12 @@ class HashTable:
         return None
 
     def find(self, value):
-        i = self.hash_fun(value)
+        slot = self.hash_fun(value)
+        i = slot
         while self.slots[i] is not None:
             if self.slots[i] == value:
                 return i
             i = (i + self.step) % self.size
+            if i == slot:
+                break
         return None

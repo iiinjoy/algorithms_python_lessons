@@ -64,6 +64,7 @@ class TestHashTableMethods(unittest.TestCase):
         sequence = "abcdefghijklmnopqrstuvwxyz12345"
         for elem in sequence:
             self.assertIsNotNone(H.put(elem))
+        self.assertIsNone(H.find("12345"))
         sequence2 = ""
         for elem in sequence:
             slot = H.find(elem)
