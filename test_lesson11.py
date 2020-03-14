@@ -37,6 +37,26 @@ class TestPowerSetMethods(unittest.TestCase):
         self.assertEqual(p.size(), 0)
         self.assertFalse(p.remove("42"))
         self.assertEqual(p.size(), 0)
+        p.put("1")
+        p.put("1")
+        self.assertEqual(p.size(), 1)
+        self.assertTrue(p.remove("1"))
+        self.assertFalse(p.remove("1"))
+        self.assertFalse(p.get("42"))
+        self.assertFalse(p.get("1"))
+        self.assertEqual(p.size(), 0)
+
+        for i in range(20000):
+            p.put(str(i))
+        self.assertEqual(p.size(), 20000)
+        for i in range(20000):
+            self.assertTrue(p.get(str(i)))
+        for i in range(20000):
+            self.assertTrue(p.remove(str(i)))
+            self.assertFalse(p.remove(str(i)))
+        self.assertEqual(p.size(), 0)
+        for i in range(20000):
+            self.assertFalse(p.get(str(i)))
 
     def test_intersection(self):
         set1 = PowerSet()
